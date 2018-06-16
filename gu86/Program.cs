@@ -10,7 +10,7 @@ namespace gu86
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("hello gu86");
+            Console.WriteLine("hello gu86\n");
         }
     }
 }
