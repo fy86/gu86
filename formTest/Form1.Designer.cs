@@ -46,6 +46,7 @@
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.loadbinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.datatableshowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -97,7 +98,8 @@
             // 
             this.testToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.loadtxtgbToolStripMenuItem1,
-            this.loadbinToolStripMenuItem});
+            this.loadbinToolStripMenuItem,
+            this.datatableshowToolStripMenuItem});
             this.testToolStripMenuItem.Name = "testToolStripMenuItem";
             this.testToolStripMenuItem.Size = new System.Drawing.Size(41, 21);
             this.testToolStripMenuItem.Text = "test";
@@ -215,6 +217,13 @@
             this.loadbinToolStripMenuItem.Text = "load.bin";
             this.loadbinToolStripMenuItem.Click += new System.EventHandler(this.loadbinToolStripMenuItem_Click);
             // 
+            // datatableshowToolStripMenuItem
+            // 
+            this.datatableshowToolStripMenuItem.Name = "datatableshowToolStripMenuItem";
+            this.datatableshowToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.datatableshowToolStripMenuItem.Text = "datatable.show";
+            this.datatableshowToolStripMenuItem.Click += new System.EventHandler(this.datatableshowToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -258,6 +267,7 @@
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.TabPage tabPage5;
         private System.Windows.Forms.ToolStripMenuItem loadbinToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem datatableshowToolStripMenuItem;
     }
 }
 
