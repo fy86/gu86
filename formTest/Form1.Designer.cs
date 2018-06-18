@@ -47,6 +47,7 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.loadbinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.datatableshowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadidxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -99,7 +100,8 @@
             this.testToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.loadtxtgbToolStripMenuItem1,
             this.loadbinToolStripMenuItem,
-            this.datatableshowToolStripMenuItem});
+            this.datatableshowToolStripMenuItem,
+            this.loadidxToolStripMenuItem});
             this.testToolStripMenuItem.Name = "testToolStripMenuItem";
             this.testToolStripMenuItem.Size = new System.Drawing.Size(41, 21);
             this.testToolStripMenuItem.Text = "test";
@@ -224,6 +226,13 @@
             this.datatableshowToolStripMenuItem.Text = "datatable.show";
             this.datatableshowToolStripMenuItem.Click += new System.EventHandler(this.datatableshowToolStripMenuItem_Click);
             // 
+            // loadidxToolStripMenuItem
+            // 
+            this.loadidxToolStripMenuItem.Name = "loadidxToolStripMenuItem";
+            this.loadidxToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.loadidxToolStripMenuItem.Text = "load.idx";
+            this.loadidxToolStripMenuItem.Click += new System.EventHandler(this.loadidxToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -268,6 +277,7 @@
         private System.Windows.Forms.TabPage tabPage5;
         private System.Windows.Forms.ToolStripMenuItem loadbinToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem datatableshowToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadidxToolStripMenuItem;
     }
 }
 
