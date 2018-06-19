@@ -56,9 +56,24 @@ namespace formTest
             gtable1.DefaultView.Sort = "sn";
         }
 
+        private void load_configInfo()
+        {
+            if (!System.IO.File.Exists("configInfo.txt")) return;
+            string[] lines = File.ReadAllLines("configinfo.txt");
+            foreach(string line in lines)
+            {
+                string[] words = line.Split(new[] { ' ', '\t' },StringSplitOptions.None);
+                if (words.Length > 1)
+                {
+                    if (words[0].Equals("tdx_root")) gstr_tdx_root = words[1];
+                }
+            }
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
             //load_datagridview_test();
+            load_configInfo();
         }
 
         private void loadtxtgbToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -146,6 +161,94 @@ namespace formTest
                     0.0f);
             }
             dataGridView1.DataSource = gtableIdx;
+        }
+        private void save_configinfo()
+        {
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter("configinfo.txt"))
+            {
+                if (gstr_tdx_root.Length > 0)
+                {
+                    file.WriteLine("tdx_root " + gstr_tdx_root);
+                }
+            }
+        }
+        // tdx_root ..
+        // ths_root ..
+        private string gstr_tdx_root = "";
+        // save config.file
+        private void saveconfigToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            save_configinfo();
+        }
+
+        private void get_tdx_root()
+        {
+            DialogResult r = folderBrowserDialog1.ShowDialog();
+            if (r == DialogResult.OK || r == DialogResult.Yes)
+            {
+                gstr_tdx_root = folderBrowserDialog1.SelectedPath;
+                int len = gstr_tdx_root.Length;
+                if (!gstr_tdx_root.Substring(len - 1).Equals("\\")) gstr_tdx_root += "\\";
+                save_configinfo();
+            }
+
+        }
+
+        private void gettdxrootToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("current tdx_root: " + gstr_tdx_root);
+            get_tdx_root();
+        }
+
+        private void top100new()
+        {
+            int n = 0;
+            if (gstr_tdx_root.Length < 1)
+            {
+                MessageBox.Show("tdx root dir blank!");
+                return;
+            }
+            DataTable dt = new DataTable() ;
+            dt.Columns.Add("filename", typeof(string));
+            dt.Columns.Add("size", typeof(int));
+
+
+            DirectoryInfo d = new DirectoryInfo(gstr_tdx_root + "vipdoc\\sh\\lday");
+            FileInfo[] fs = d.GetFiles(@"sh60????*.day");
+            foreach(FileInfo f in fs)
+            {
+                dt.Rows.Add(f.FullName, f.Length);
+                //richTextBox1.AppendText(f.FullName + " " + f.Length.ToString() + "\n");
+            }
+            DirectoryInfo ds = new DirectoryInfo(gstr_tdx_root + "vipdoc\\sz\\lday");
+            FileInfo[] fs00 = ds.GetFiles(@"sz00????*.day");
+            foreach (FileInfo f in fs00)
+            {
+                dt.Rows.Add(f.FullName, f.Length);
+                //richTextBox1.AppendText(f.FullName + " " + f.Length.ToString() + "\n");
+            }
+            FileInfo[] fs30 = ds.GetFiles(@"sz30????*.day");
+            foreach (FileInfo f in fs30)
+            {
+                dt.Rows.Add(f.FullName, f.Length);
+                //richTextBox1.AppendText(f.FullName + " " + f.Length.ToString() + "\n");
+            }
+            n = fs.Length + fs00.Length + fs30.Length;
+            richTextBox1.AppendText("total files : " + n.ToString() + " found\n");
+            dt.DefaultView.Sort = "size";
+
+            int i = 0;
+            foreach(DataRow dr in dt.Rows)
+            {
+                if (i++> 100) break;
+                richTextBox1.AppendText(dr["filename"].ToString() + " " + dr["size"].ToString()+"\n");
+            }
+        }
+
+        private void new100ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // new top 100
+            top100new();
         }
     }
 }

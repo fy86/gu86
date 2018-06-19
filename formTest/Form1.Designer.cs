@@ -35,6 +35,9 @@
             this.loadtxtgbToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadtxtgbToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadbinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.datatableshowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadidxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
@@ -45,9 +48,10 @@
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.loadbinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.datatableshowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.loadidxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveconfigToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gettdxrootToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.new100ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -72,7 +76,9 @@
             this.configToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.getdirToolStripMenuItem,
             this.selectfileToolStripMenuItem,
-            this.loadtxtgbToolStripMenuItem});
+            this.loadtxtgbToolStripMenuItem,
+            this.saveconfigToolStripMenuItem,
+            this.gettdxrootToolStripMenuItem});
             this.configToolStripMenuItem.Name = "configToolStripMenuItem";
             this.configToolStripMenuItem.Size = new System.Drawing.Size(56, 21);
             this.configToolStripMenuItem.Text = "config";
@@ -80,19 +86,19 @@
             // getdirToolStripMenuItem
             // 
             this.getdirToolStripMenuItem.Name = "getdirToolStripMenuItem";
-            this.getdirToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.getdirToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.getdirToolStripMenuItem.Text = "select.dir";
             // 
             // selectfileToolStripMenuItem
             // 
             this.selectfileToolStripMenuItem.Name = "selectfileToolStripMenuItem";
-            this.selectfileToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.selectfileToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.selectfileToolStripMenuItem.Text = "select.file";
             // 
             // loadtxtgbToolStripMenuItem
             // 
             this.loadtxtgbToolStripMenuItem.Name = "loadtxtgbToolStripMenuItem";
-            this.loadtxtgbToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.loadtxtgbToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.loadtxtgbToolStripMenuItem.Text = "load.txt.gb";
             // 
             // testToolStripMenuItem
@@ -101,7 +107,8 @@
             this.loadtxtgbToolStripMenuItem1,
             this.loadbinToolStripMenuItem,
             this.datatableshowToolStripMenuItem,
-            this.loadidxToolStripMenuItem});
+            this.loadidxToolStripMenuItem,
+            this.new100ToolStripMenuItem});
             this.testToolStripMenuItem.Name = "testToolStripMenuItem";
             this.testToolStripMenuItem.Size = new System.Drawing.Size(41, 21);
             this.testToolStripMenuItem.Text = "test";
@@ -109,9 +116,30 @@
             // loadtxtgbToolStripMenuItem1
             // 
             this.loadtxtgbToolStripMenuItem1.Name = "loadtxtgbToolStripMenuItem1";
-            this.loadtxtgbToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.loadtxtgbToolStripMenuItem1.Size = new System.Drawing.Size(164, 22);
             this.loadtxtgbToolStripMenuItem1.Text = "load.txt.gb";
             this.loadtxtgbToolStripMenuItem1.Click += new System.EventHandler(this.loadtxtgbToolStripMenuItem1_Click);
+            // 
+            // loadbinToolStripMenuItem
+            // 
+            this.loadbinToolStripMenuItem.Name = "loadbinToolStripMenuItem";
+            this.loadbinToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.loadbinToolStripMenuItem.Text = "load.bin";
+            this.loadbinToolStripMenuItem.Click += new System.EventHandler(this.loadbinToolStripMenuItem_Click);
+            // 
+            // datatableshowToolStripMenuItem
+            // 
+            this.datatableshowToolStripMenuItem.Name = "datatableshowToolStripMenuItem";
+            this.datatableshowToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.datatableshowToolStripMenuItem.Text = "datatable.show";
+            this.datatableshowToolStripMenuItem.Click += new System.EventHandler(this.datatableshowToolStripMenuItem_Click);
+            // 
+            // loadidxToolStripMenuItem
+            // 
+            this.loadidxToolStripMenuItem.Name = "loadidxToolStripMenuItem";
+            this.loadidxToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.loadidxToolStripMenuItem.Text = "load.idx";
+            this.loadidxToolStripMenuItem.Click += new System.EventHandler(this.loadidxToolStripMenuItem_Click);
             // 
             // tabControl1
             // 
@@ -212,26 +240,26 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // loadbinToolStripMenuItem
+            // saveconfigToolStripMenuItem
             // 
-            this.loadbinToolStripMenuItem.Name = "loadbinToolStripMenuItem";
-            this.loadbinToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.loadbinToolStripMenuItem.Text = "load.bin";
-            this.loadbinToolStripMenuItem.Click += new System.EventHandler(this.loadbinToolStripMenuItem_Click);
+            this.saveconfigToolStripMenuItem.Name = "saveconfigToolStripMenuItem";
+            this.saveconfigToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveconfigToolStripMenuItem.Text = "save.config";
+            this.saveconfigToolStripMenuItem.Click += new System.EventHandler(this.saveconfigToolStripMenuItem_Click);
             // 
-            // datatableshowToolStripMenuItem
+            // gettdxrootToolStripMenuItem
             // 
-            this.datatableshowToolStripMenuItem.Name = "datatableshowToolStripMenuItem";
-            this.datatableshowToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
-            this.datatableshowToolStripMenuItem.Text = "datatable.show";
-            this.datatableshowToolStripMenuItem.Click += new System.EventHandler(this.datatableshowToolStripMenuItem_Click);
+            this.gettdxrootToolStripMenuItem.Name = "gettdxrootToolStripMenuItem";
+            this.gettdxrootToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.gettdxrootToolStripMenuItem.Text = "get.tdx_root";
+            this.gettdxrootToolStripMenuItem.Click += new System.EventHandler(this.gettdxrootToolStripMenuItem_Click);
             // 
-            // loadidxToolStripMenuItem
+            // new100ToolStripMenuItem
             // 
-            this.loadidxToolStripMenuItem.Name = "loadidxToolStripMenuItem";
-            this.loadidxToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
-            this.loadidxToolStripMenuItem.Text = "load.idx";
-            this.loadidxToolStripMenuItem.Click += new System.EventHandler(this.loadidxToolStripMenuItem_Click);
+            this.new100ToolStripMenuItem.Name = "new100ToolStripMenuItem";
+            this.new100ToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.new100ToolStripMenuItem.Text = "new100";
+            this.new100ToolStripMenuItem.Click += new System.EventHandler(this.new100ToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -278,6 +306,10 @@
         private System.Windows.Forms.ToolStripMenuItem loadbinToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem datatableshowToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loadidxToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveconfigToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem gettdxrootToolStripMenuItem;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
+        private System.Windows.Forms.ToolStripMenuItem new100ToolStripMenuItem;
     }
 }
 
