@@ -25,6 +25,25 @@ namespace formTest
 
     public partial class Form1 : Form
     {
+        public class mycFileSize
+        {
+            public string filename { get; set; }
+            public long size { get; set; }
+            public long days { get; set; }
+        }
+        public class mycHisA
+        {
+            public int date { get; set; }
+            public float open { get; set; }
+            public float high { get; set; }
+            public float low { get; set; }
+            public float close { get; set; }
+            public float yc { get; set; }
+            public float vol { get; set; }
+            public float amount { get; set; }
+            public float percent { get; set; }
+        }
+
         private string gStrCurrentDir = "";
         private string gStrTHSdir = "";
         private string gStrTDXdir = "";
@@ -89,25 +108,93 @@ namespace formTest
             richTextBox1.Text += "\ncurrent work dir: " + gStrCurrentDir;
         }
 
-        private void loadbinToolStripMenuItem_Click(object sender, EventArgs e)
+        private void loadBinQLwgt()
+        {
+            // load bin 钱龙权息数据
+            DialogResult r = openFileDialog1.ShowDialog();
+            if (r != DialogResult.OK) return;
+            FileInfo fi = new FileInfo(openFileDialog1.FileName);
+            long len = fi.Length;
+            byte[] buf = System.IO.File.ReadAllBytes(openFileDialog1.FileName);
+            Buffer.BlockCopy(buf, 0, gnBuf, 0, (int)len);
+            Buffer.BlockCopy(buf, 0, gfBuf, 0, (int)len);
+            int n = (int)(len >> 2);
+            richTextBox1.Text = "";
+            for (int i = 0; i < n; i++)
+            {
+                // 钱龙权息
+                string str = gnBuf[i].ToString()
+                    + "  y: " + (gnBuf[i] >> 20).ToString()
+                    + "  m: " + ((gnBuf[i] >> 16) & 0x0f).ToString()
+                    + "  d: " + ((gnBuf[i] >> 11) & 0x01f).ToString()
+                    + "  float: " + gfBuf[i].ToString("0.0000") + "\n";
+                richTextBox1.AppendText(str);
+            }
+
+        }
+        private void loadBinA()
         {
             // load bin 个股日线数据
             DialogResult r = openFileDialog1.ShowDialog();
             if (r != DialogResult.OK) return;
             FileInfo fi = new FileInfo(openFileDialog1.FileName);
             long len = fi.Length;
-            byte[] buf=System.IO.File.ReadAllBytes(openFileDialog1.FileName);
-            Buffer.BlockCopy(buf, 0, gnBuf, 0,(int)len );
+            byte[] buf = System.IO.File.ReadAllBytes(openFileDialog1.FileName);
+            Buffer.BlockCopy(buf, 0, gnBuf, 0, (int)len);
             Buffer.BlockCopy(buf, 0, gfBuf, 0, (int)len);
             int n = (int)(len >> 2);
-            for(int i = n-30; i < n; i++)
+            richTextBox1.Text = "";
+            for (int i = 0; i < n; i++)
             {
-                string str = gnBuf[i].ToString() +" : " + gfBuf[i].ToString("0.0000")+"\n";
-                richTextBox1.Text += str;
+                string str = gnBuf[i].ToString() + " : " + gfBuf[i].ToString("0.0000") + "\n";
+                richTextBox1.AppendText(str);
             }
 
+        }
+        private void loadBinAmin()
+        {
+            // load bin 个股分钟数据
+            DialogResult r = openFileDialog1.ShowDialog();
+            if (r != DialogResult.OK) return;
+            FileInfo fi = new FileInfo(openFileDialog1.FileName);
+            long len = fi.Length;
+            byte[] buf = System.IO.File.ReadAllBytes(openFileDialog1.FileName);
+            if (len > 4000) len = 4000;
+            Buffer.BlockCopy(buf, 0, gnBuf, 0, (int)len);
+            Buffer.BlockCopy(buf, 0, gfBuf, 0, (int)len);
+            int n = (int)(len >> 2);
+            richTextBox1.Text = "";
+            for (int i = 0; i < n; i++)
+            {
+#if false
+                string str = gnBuf[i].ToString()
+                    + "  y: " + (gnBuf[i] >> 20).ToString()
+                    + "  m: " + ((gnBuf[i] >> 16) & 0x0f).ToString()
+                    + "  d: " + ((gnBuf[i] >> 11) & 0x01f).ToString()
+                    + "  hh: " + ((gnBuf[i] >> 6) & 0x1f).ToString()
+                    + "  mm: " + ((gnBuf[i]) & 0x3f).ToString()
+                    + "  float: " + gfBuf[i].ToString("0.0000") + "\n";
+#endif
+                string str = gnBuf[i].ToString()
+                    + " hex: " + gnBuf[i].ToString("X4")
+                    + "  y: " + (gnBuf[i] >> 20).ToString()
+                    + "  m: " + ((gnBuf[i] >> 16) & 0x0f).ToString()
+                    + "  d: " + ((gnBuf[i] >> 11) & 0x01f).ToString()
+                    + "  hh: " + (((gnBuf[i]>>16)&0x0ffff)/60).ToString()
+                    + "  mm: " + (((gnBuf[i]>>16)&0x0ffff)%60).ToString()
+                    + "  float: " + gfBuf[i].ToString("0.0000") + "\n";
+                richTextBox1.AppendText(str);
+            }
 
-
+        }
+        // 
+        private void loadbinToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // load 个股
+            //loadBinA();
+            loadBinAmin();
+            // load qiaolong wgt
+            //loadBinQLwgt();
         }
 
         DataTable gtable1 = new DataTable();
@@ -200,6 +287,8 @@ namespace formTest
             get_tdx_root();
         }
 
+        List<mycFileSize> listFileSize = new List<mycFileSize>();
+
         private void top100new()
         {
             int n = 0;
@@ -208,40 +297,37 @@ namespace formTest
                 MessageBox.Show("tdx root dir blank!");
                 return;
             }
-            DataTable dt = new DataTable() ;
-            dt.Columns.Add("filename", typeof(string));
-            dt.Columns.Add("size", typeof(int));
-
 
             DirectoryInfo d = new DirectoryInfo(gstr_tdx_root + "vipdoc\\sh\\lday");
             FileInfo[] fs = d.GetFiles(@"sh60????*.day");
             foreach(FileInfo f in fs)
             {
-                dt.Rows.Add(f.FullName, f.Length);
-                //richTextBox1.AppendText(f.FullName + " " + f.Length.ToString() + "\n");
+                listFileSize.Add(new mycFileSize(){ filename = f.FullName, size = f.Length,days=f.Length>>5 });
             }
             DirectoryInfo ds = new DirectoryInfo(gstr_tdx_root + "vipdoc\\sz\\lday");
             FileInfo[] fs00 = ds.GetFiles(@"sz00????*.day");
             foreach (FileInfo f in fs00)
             {
-                dt.Rows.Add(f.FullName, f.Length);
-                //richTextBox1.AppendText(f.FullName + " " + f.Length.ToString() + "\n");
+                listFileSize.Add(new mycFileSize() { filename = f.FullName, size = f.Length ,days=f.Length>>5});
             }
             FileInfo[] fs30 = ds.GetFiles(@"sz30????*.day");
             foreach (FileInfo f in fs30)
             {
-                dt.Rows.Add(f.FullName, f.Length);
-                //richTextBox1.AppendText(f.FullName + " " + f.Length.ToString() + "\n");
+                listFileSize.Add(new mycFileSize() { filename = f.FullName, size = f.Length,days=f.Length>>5 });
             }
             n = fs.Length + fs00.Length + fs30.Length;
             richTextBox1.AppendText("total files : " + n.ToString() + " found\n");
-            dt.DefaultView.Sort = "size";
+
+            listFileSize.Sort(delegate (mycFileSize x, mycFileSize y)
+            {
+                return x.size.CompareTo(y.size);
+            });
 
             int i = 0;
-            foreach(DataRow dr in dt.Rows)
+            foreach(mycFileSize cfs in listFileSize)
             {
                 if (i++> 100) break;
-                richTextBox1.AppendText(dr["filename"].ToString() + " " + dr["size"].ToString()+"\n");
+                richTextBox1.AppendText(cfs.filename+"     size: " + cfs.size.ToString()+"     days: "+cfs.days.ToString()+"\n");
             }
         }
 
@@ -249,6 +335,19 @@ namespace formTest
         {
             // new top 100
             top100new();
+        }
+
+        private void loadQLwgt()
+        {
+            DialogResult r = openFileDialog1.ShowDialog();
+            if (r != DialogResult.OK) return;
+
+            return;
+        }
+
+        private void loadqlwqtToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            loadQLwgt();
         }
     }
 }

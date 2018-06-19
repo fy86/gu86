@@ -33,11 +33,14 @@
             this.getdirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.selectfileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadtxtgbToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveconfigToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gettdxrootToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadtxtgbToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.loadbinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.datatableshowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadidxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.new100ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
@@ -48,10 +51,8 @@
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.saveconfigToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.gettdxrootToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.new100ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadqlwqtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -86,20 +87,34 @@
             // getdirToolStripMenuItem
             // 
             this.getdirToolStripMenuItem.Name = "getdirToolStripMenuItem";
-            this.getdirToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.getdirToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.getdirToolStripMenuItem.Text = "select.dir";
             // 
             // selectfileToolStripMenuItem
             // 
             this.selectfileToolStripMenuItem.Name = "selectfileToolStripMenuItem";
-            this.selectfileToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.selectfileToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.selectfileToolStripMenuItem.Text = "select.file";
             // 
             // loadtxtgbToolStripMenuItem
             // 
             this.loadtxtgbToolStripMenuItem.Name = "loadtxtgbToolStripMenuItem";
-            this.loadtxtgbToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.loadtxtgbToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.loadtxtgbToolStripMenuItem.Text = "load.txt.gb";
+            // 
+            // saveconfigToolStripMenuItem
+            // 
+            this.saveconfigToolStripMenuItem.Name = "saveconfigToolStripMenuItem";
+            this.saveconfigToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.saveconfigToolStripMenuItem.Text = "save.config";
+            this.saveconfigToolStripMenuItem.Click += new System.EventHandler(this.saveconfigToolStripMenuItem_Click);
+            // 
+            // gettdxrootToolStripMenuItem
+            // 
+            this.gettdxrootToolStripMenuItem.Name = "gettdxrootToolStripMenuItem";
+            this.gettdxrootToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.gettdxrootToolStripMenuItem.Text = "get.tdx_root";
+            this.gettdxrootToolStripMenuItem.Click += new System.EventHandler(this.gettdxrootToolStripMenuItem_Click);
             // 
             // testToolStripMenuItem
             // 
@@ -108,7 +123,8 @@
             this.loadbinToolStripMenuItem,
             this.datatableshowToolStripMenuItem,
             this.loadidxToolStripMenuItem,
-            this.new100ToolStripMenuItem});
+            this.new100ToolStripMenuItem,
+            this.loadqlwqtToolStripMenuItem});
             this.testToolStripMenuItem.Name = "testToolStripMenuItem";
             this.testToolStripMenuItem.Size = new System.Drawing.Size(41, 21);
             this.testToolStripMenuItem.Text = "test";
@@ -140,6 +156,13 @@
             this.loadidxToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.loadidxToolStripMenuItem.Text = "load.idx";
             this.loadidxToolStripMenuItem.Click += new System.EventHandler(this.loadidxToolStripMenuItem_Click);
+            // 
+            // new100ToolStripMenuItem
+            // 
+            this.new100ToolStripMenuItem.Name = "new100ToolStripMenuItem";
+            this.new100ToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.new100ToolStripMenuItem.Text = "new100";
+            this.new100ToolStripMenuItem.Click += new System.EventHandler(this.new100ToolStripMenuItem_Click);
             // 
             // tabControl1
             // 
@@ -240,26 +263,12 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // saveconfigToolStripMenuItem
+            // loadqlwqtToolStripMenuItem
             // 
-            this.saveconfigToolStripMenuItem.Name = "saveconfigToolStripMenuItem";
-            this.saveconfigToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.saveconfigToolStripMenuItem.Text = "save.config";
-            this.saveconfigToolStripMenuItem.Click += new System.EventHandler(this.saveconfigToolStripMenuItem_Click);
-            // 
-            // gettdxrootToolStripMenuItem
-            // 
-            this.gettdxrootToolStripMenuItem.Name = "gettdxrootToolStripMenuItem";
-            this.gettdxrootToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.gettdxrootToolStripMenuItem.Text = "get.tdx_root";
-            this.gettdxrootToolStripMenuItem.Click += new System.EventHandler(this.gettdxrootToolStripMenuItem_Click);
-            // 
-            // new100ToolStripMenuItem
-            // 
-            this.new100ToolStripMenuItem.Name = "new100ToolStripMenuItem";
-            this.new100ToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
-            this.new100ToolStripMenuItem.Text = "new100";
-            this.new100ToolStripMenuItem.Click += new System.EventHandler(this.new100ToolStripMenuItem_Click);
+            this.loadqlwqtToolStripMenuItem.Name = "loadqlwqtToolStripMenuItem";
+            this.loadqlwqtToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.loadqlwqtToolStripMenuItem.Text = "load.ql.wgt";
+            this.loadqlwqtToolStripMenuItem.Click += new System.EventHandler(this.loadqlwqtToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -310,6 +319,7 @@
         private System.Windows.Forms.ToolStripMenuItem gettdxrootToolStripMenuItem;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.ToolStripMenuItem new100ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadqlwqtToolStripMenuItem;
     }
 }
 
