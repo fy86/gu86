@@ -151,6 +151,7 @@ namespace formTest
             }
 
         }
+        // 通达信分钟
         private void loadBinAmin()
         {
             // load bin 个股分钟数据
@@ -166,24 +167,72 @@ namespace formTest
             richTextBox1.Text = "";
             for (int i = 0; i < n; i++)
             {
-#if false
                 string str = gnBuf[i].ToString()
-                    + "  y: " + (gnBuf[i] >> 20).ToString()
-                    + "  m: " + ((gnBuf[i] >> 16) & 0x0f).ToString()
-                    + "  d: " + ((gnBuf[i] >> 11) & 0x01f).ToString()
-                    + "  hh: " + ((gnBuf[i] >> 6) & 0x1f).ToString()
-                    + "  mm: " + ((gnBuf[i]) & 0x3f).ToString()
-                    + "  float: " + gfBuf[i].ToString("0.0000") + "\n";
-#endif
-                string str = gnBuf[i].ToString()
-                    + " hex: " + gnBuf[i].ToString("X4")
-                    + "  y: " + (gnBuf[i] >> 20).ToString()
-                    + "  m: " + ((gnBuf[i] >> 16) & 0x0f).ToString()
-                    + "  d: " + ((gnBuf[i] >> 11) & 0x01f).ToString()
-                    + "  hh: " + (((gnBuf[i]>>16)&0x0ffff)/60).ToString()
-                    + "  mm: " + (((gnBuf[i]>>16)&0x0ffff)%60).ToString()
+                    + "  " + (((gnBuf[i]>>11)&0x1f)+2004 ).ToString()
+                    + "-" + ((gnBuf[i] &0x3ff)/100).ToString()
+                    + "-" + ((gnBuf[i] &0x3ff)%100).ToString()
+                    + "  " + ((gnBuf[i]>>16)/60).ToString()
+                    + ":" + ((gnBuf[i]>>16)%60).ToString()
                     + "  float: " + gfBuf[i].ToString("0.0000") + "\n";
                 richTextBox1.AppendText(str);
+            }
+
+        }
+        // tdx.1,5分钟日期时间格式
+        private void loadBinAmin2()
+        {
+            // load bin 个股分钟数据
+            DialogResult r = openFileDialog1.ShowDialog();
+            if (r != DialogResult.OK) return;
+
+            FileInfo fi = new FileInfo(openFileDialog1.FileName);
+            long len = fi.Length;
+            long len4 = len >> 2;
+            long len8 = len4 >> 3;
+            long il = 0;
+            short dt = 0,dt1 = 0;
+            short hhmm = 0, hhmm1 = 0;
+            int i=0;
+            float f1, f2, f3, f4, f5;
+            int v = 0;
+            using (BinaryReader reader = new BinaryReader(File.Open(openFileDialog1.FileName, FileMode.Open)))
+            {
+                for (il = 0; il < len8; il++)
+                {
+                    dt = reader.ReadInt16();
+                    hhmm = reader.ReadInt16();
+                    if (dt != dt1)
+                    {
+                        richTextBox1.AppendText("dt: " + dt1.ToString("X4") + " -> " + dt.ToString("X4") + " -- " + (dt-dt1).ToString()+ "\n");
+                    }
+                    dt1 = dt;
+                    if (hhmm - hhmm1 != 1)
+                    {
+                        richTextBox1.AppendText("hhmm: " + hhmm1.ToString("X4") + " -> " + hhmm.ToString("X4") + "\n");
+                    }
+                    hhmm1 = hhmm;
+
+                    f1 = reader.ReadSingle();
+                    f2 = reader.ReadSingle();
+                    f3 = reader.ReadSingle();
+                    f4 = reader.ReadSingle();
+                    f5 = reader.ReadSingle();
+                    v = reader.ReadInt32();
+                    i = reader.ReadInt32();
+
+                    richTextBox1.AppendText((2004+(dt >> 11)).ToString()
+                        + "-" + ((dt & 0x7ff) / 100).ToString() 
+                        + "-" + ((dt & 0x7ff) % 100).ToString()
+                        + " " + (hhmm/60).ToString()
+                        + ":" + (hhmm%60).ToString()
+                        + " " + f1.ToString("f3")
+                        + " " + f2.ToString("f3")
+                        + " " + f3.ToString("f3")
+                        + " " + f4.ToString("f3")
+                        + " " + v.ToString()
+                        + " " + f5.ToString("f3")
+                        + "\n");
+                }
             }
 
         }
@@ -192,7 +241,7 @@ namespace formTest
         {
             // load 个股
             //loadBinA();
-            loadBinAmin();
+            loadBinAmin2();
             // load qiaolong wgt
             //loadBinQLwgt();
         }
