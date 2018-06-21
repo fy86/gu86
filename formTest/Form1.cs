@@ -43,6 +43,20 @@ namespace formTest
             public float amount { get; set; }
             public float percent { get; set; }
         }
+        List<mycHisA> hisA1 = new List<mycHisA>();
+
+        public class mycQLwgt
+        {
+            public int date;
+            public float song;
+            public float zhuan;
+            public float price;
+            public float pei;
+            public float hong;
+            public float liutong;
+            public float all;
+            public float r;
+        }
 
         private string gStrCurrentDir = "";
         private string gStrTHSdir = "";
@@ -132,6 +146,55 @@ namespace formTest
             }
 
         }
+        private void loadHisA()
+        {
+            DialogResult r = openFileDialog1.ShowDialog();
+            if (r != DialogResult.OK) return;
+            FileInfo fi = new FileInfo(openFileDialog1.FileName);
+            long len = fi.Length;
+            long len4 = len >> 2;
+            long len8 = len4 >> 3;
+            long il = 0;
+            int ri;
+            float rf;
+            using (BinaryReader reader = new BinaryReader(File.Open(openFileDialog1.FileName, FileMode.Open)))
+            {
+                for (il = 0; il < len8; il++)
+                {
+                    mycHisA cHisA = new mycHisA();
+                    cHisA.date = reader.ReadInt32();
+                    cHisA.open = .01f * reader.ReadInt32();
+                    cHisA.high = .01f * reader.ReadInt32();
+                    cHisA.low = .01f * reader.ReadInt32();
+                    cHisA.close = .01f * reader.ReadInt32();
+                    cHisA.amount = .01f * reader.ReadSingle();
+                    cHisA.vol = .01f * reader.ReadInt32();
+                    ri = reader.ReadInt32();
+                    hisA1.Add(cHisA);
+                }
+            }
+            hisA1.Sort(delegate (mycHisA x, mycHisA y)
+            {
+                return y.date.CompareTo(x.date);
+            });
+            hisA1.Sort(delegate (mycHisA x, mycHisA y)
+            {
+                return x.date.CompareTo(y.date);
+            });
+
+            richTextBox1.Text = "";
+            foreach(mycHisA chisa in hisA1)
+            {
+                richTextBox1.AppendText(chisa.date.ToString()
+                    + " " + chisa.open.ToString("f2")
+                    + " " + chisa.high.ToString("f2")
+                    + " " + chisa.low.ToString("f2")
+                    + " " + chisa.close.ToString("f2")
+                    + " " + chisa.vol.ToString("f0")
+                    + " " + chisa.amount.ToString("f0")
+                    +"\n");
+            }
+        }
         private void loadBinA()
         {
             // load bin 个股日线数据
@@ -151,10 +214,10 @@ namespace formTest
             }
 
         }
-        // 通达信分钟
+        // tdx.min
         private void loadBinAmin()
         {
-            // load bin 个股分钟数据
+            // load bin min1 , min5
             DialogResult r = openFileDialog1.ShowDialog();
             if (r != DialogResult.OK) return;
             FileInfo fi = new FileInfo(openFileDialog1.FileName);
@@ -241,7 +304,10 @@ namespace formTest
         {
             // load 个股
             //loadBinA();
-            loadBinAmin2();
+            //loadBinAmin2();
+
+            loadHisA();
+
             // load qiaolong wgt
             //loadBinQLwgt();
         }
