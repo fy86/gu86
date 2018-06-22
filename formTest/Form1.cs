@@ -58,6 +58,14 @@ namespace formTest
             public float r;
         }
         List<mycQLwgt> gQLwgt = new List<mycQLwgt>();
+        public class mycNameCode
+        {
+            public string hs;
+            public string name;
+            public string code;
+        }
+        List<mycNameCode> gNameCode = new List<mycNameCode>();
+
 
         private string gStrCurrentDir = "";
         private string gStrTHSdir = "";
@@ -509,6 +517,42 @@ namespace formTest
         private void loadqlwqtToolStripMenuItem_Click(object sender, EventArgs e)
         {
             loadQLwgt();
+        }
+
+        private void loadthsnameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult r = openFileDialog1.ShowDialog();
+            if (r != DialogResult.OK) return;
+            FileInfo fi = new FileInfo(openFileDialog1.FileName);
+            long len = fi.Length;
+            string[] lines = System.IO.File.ReadAllLines(openFileDialog1.FileName);
+            richTextBox1.Text = "";
+            foreach(string line in lines)
+            {
+                if (line.Contains("="))
+                {
+                    richTextBox1.AppendText(line + "\n");
+                }
+            }
+
+        }
+
+        private void loadthsnameToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            DialogResult r = openFileDialog1.ShowDialog();
+            if (r != DialogResult.OK) return;
+            FileInfo fi = new FileInfo(openFileDialog1.FileName);
+            long len = fi.Length;
+            string[] lines = System.IO.File.ReadAllLines(openFileDialog1.FileName,Encoding.GetEncoding(936));
+            richTextBox1.Text = "";
+            foreach (string line in lines)
+            {
+                if (line.Contains("="))
+                {
+                    richTextBox1.AppendText(line + "\n");
+                }
+            }
+
         }
     }
 }
