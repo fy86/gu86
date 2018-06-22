@@ -108,6 +108,8 @@ namespace formTest
                 if (words.Length > 1)
                 {
                     if (words[0].Equals("tdx_root")) gstr_tdx_root = words[1];
+                    else if (words[0].Equals("ths_root")) gstr_ths_root = words[1];
+                    else if (words[0].Equals("ql_root")) gstr_ql_root = words[1];
                 }
             }
         }
@@ -426,15 +428,36 @@ namespace formTest
                 {
                     file.WriteLine("tdx_root " + gstr_tdx_root);
                 }
+                if (gstr_ths_root.Length > 0)
+                {
+                    file.WriteLine("ths_root " + gstr_ths_root);
+                }
+                if (gstr_ql_root.Length > 0)
+                {
+                    file.WriteLine("ql_root " + gstr_ql_root);
+                }
             }
         }
         // tdx_root ..
         // ths_root ..
         private string gstr_tdx_root = "";
+        private string gstr_ths_root = "";
+        private string gstr_ql_root = "";
         // save config.file
         private void saveconfigToolStripMenuItem_Click(object sender, EventArgs e)
         {
             save_configinfo();
+        }
+
+        private void get_str_root(string strRoot)
+        {
+            DialogResult r = folderBrowserDialog1.ShowDialog();
+            if (r == DialogResult.OK || r == DialogResult.Yes)
+            {
+                strRoot = folderBrowserDialog1.SelectedPath;
+                int len = strRoot.Length;
+                if (!strRoot.Substring(len - 1).Equals("\\")) strRoot += "\\";
+            }
         }
 
         private void get_tdx_root()
