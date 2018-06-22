@@ -144,7 +144,7 @@ namespace formTest
                     qlwgt.song = 0.0001f * reader.ReadInt32() ;// per 10
                     qlwgt.pei = 0.0001f * reader.ReadInt32();
                     qlwgt.price = 0.001f * reader.ReadInt32();
-                    qlwgt.hong = 0.0001f * reader.ReadInt32();// mei.gu....yuan
+                    qlwgt.hong = 0.001f * reader.ReadInt32();// mei.10.gu....yuan
                     qlwgt.zhuan = 0.0001f * reader.ReadInt32();
                     qlwgt.all = 1.0f * reader.ReadInt32();// wan.gu
                     qlwgt.liutong = 1.0f * reader.ReadInt32();// wan.gu
@@ -161,7 +161,7 @@ namespace formTest
                 if (wgt.zhuan > 0.001) str += " 10.zhuan:" + wgt.zhuan.ToString("f2");
                 if (wgt.pei > 0.001) str += " 10.pei:" + wgt.pei.ToString("f2")
                         + " jia:" + wgt.price.ToString("f2");
-                if (wgt.hong > 0.0001) str += " 1.hong:" + wgt.hong.ToString("f4");
+                if (wgt.hong > 0.0001) str += " 10.hong:" + wgt.hong.ToString("f4");
                 str+="\n";
                 richTextBox1.AppendText(str);
             }
