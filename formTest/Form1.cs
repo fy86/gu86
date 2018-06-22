@@ -57,6 +57,7 @@ namespace formTest
             public float all;
             public float r;
         }
+        List<mycQLwgt> gQLwgt = new List<mycQLwgt>();
 
         private string gStrCurrentDir = "";
         private string gStrTHSdir = "";
@@ -122,9 +123,53 @@ namespace formTest
             richTextBox1.Text += "\ncurrent work dir: " + gStrCurrentDir;
         }
 
+        // load list gQLwgt
+        private void loadListQLwgt()
+        {
+            // load bin QL.wgt
+            DialogResult r = openFileDialog1.ShowDialog();
+            if (r != DialogResult.OK) return;
+            FileInfo fi = new FileInfo(openFileDialog1.FileName);
+            long len = fi.Length;
+            long len4 = len >> 2;
+            long len9 = len4 / 9;
+
+            using (BinaryReader reader = new BinaryReader(File.Open(openFileDialog1.FileName, FileMode.Open)))
+            {
+                for (long il = 0; il < len9; il++)
+                {
+                    mycQLwgt qlwgt = new mycQLwgt();
+                    int dt = reader.ReadInt32();
+                    qlwgt.date = 10000 * (dt >> 20) + 100 * ((dt >> 16) & 0x0f) + ((dt >> 11) & 0x01f);
+                    qlwgt.song = 0.0001f * reader.ReadInt32() ;// per 10
+                    qlwgt.pei = 0.0001f * reader.ReadInt32();
+                    qlwgt.price = 0.001f * reader.ReadInt32();
+                    qlwgt.hong = 0.0001f * reader.ReadInt32();// mei.gu....yuan
+                    qlwgt.zhuan = 0.0001f * reader.ReadInt32();
+                    qlwgt.all = 1.0f * reader.ReadInt32();// wan.gu
+                    qlwgt.liutong = 1.0f * reader.ReadInt32();// wan.gu
+                    dt = reader.ReadInt32();
+                    gQLwgt.Add(qlwgt);
+                }
+            }
+
+            richTextBox1.Text = "";
+            foreach(mycQLwgt wgt in gQLwgt)
+            {
+                string str = wgt.date.ToString();
+                if (wgt.song > 0.001) str += " 10.song:" + wgt.song.ToString("f2");
+                if (wgt.zhuan > 0.001) str += " 10.zhuan:" + wgt.zhuan.ToString("f2");
+                if (wgt.pei > 0.001) str += " 10.pei:" + wgt.pei.ToString("f2")
+                        + " jia:" + wgt.price.ToString("f2");
+                if (wgt.hong > 0.0001) str += " 1.hong:" + wgt.hong.ToString("f4");
+                str+="\n";
+                richTextBox1.AppendText(str);
+            }
+        }
+
         private void loadBinQLwgt()
         {
-            // load bin 钱龙权息数据
+            // load bin QL.wgt
             DialogResult r = openFileDialog1.ShowDialog();
             if (r != DialogResult.OK) return;
             FileInfo fi = new FileInfo(openFileDialog1.FileName);
@@ -136,7 +181,7 @@ namespace formTest
             richTextBox1.Text = "";
             for (int i = 0; i < n; i++)
             {
-                // 钱龙权息
+                // QL.wgt
                 string str = gnBuf[i].ToString()
                     + "  y: " + (gnBuf[i] >> 20).ToString()
                     + "  m: " + ((gnBuf[i] >> 16) & 0x0f).ToString()
@@ -241,7 +286,7 @@ namespace formTest
             }
 
         }
-        // tdx.1,5分钟日期时间格式
+        // tdx.1,5min lc1,lc5 format
         private void loadBinAmin2()
         {
             // load bin 个股分钟数据
@@ -306,10 +351,11 @@ namespace formTest
             //loadBinA();
             //loadBinAmin2();
 
-            loadHisA();
+            //loadHisA();
 
             // load qiaolong wgt
             //loadBinQLwgt();
+            loadListQLwgt();
         }
 
         DataTable gtable1 = new DataTable();
